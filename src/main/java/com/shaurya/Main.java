@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.InvalidPropertiesFormatException;
+import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.stream.Collectors;
 
@@ -19,7 +20,7 @@ public class Main {
         }
         BufferedReader bufferedReader=new BufferedReader(new FileReader(path));
         String sourceCode=bufferedReader.lines().collect(Collectors.joining("\n"));
-        LinkedBlockingDeque<Token> tokenStream=new LinkedBlockingDeque<>();
+        BlockingDeque<Token> tokenStream=new LinkedBlockingDeque<>();
         Lexer lexer=new Lexer(0,sourceCode,tokenStream);
         Thread lexerThread=Thread.ofVirtual().start(lexer);
         Parser parser=new Parser(tokenStream);

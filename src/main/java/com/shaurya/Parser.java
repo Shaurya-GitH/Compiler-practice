@@ -5,20 +5,20 @@ import com.shaurya.nodes.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.BlockingDeque;
 
 public class Parser implements Runnable {
-    LinkedBlockingDeque<Token> tokenStream;
+    BlockingDeque<Token> tokenStream;
     List<Node> ast=new ArrayList<>();
 
-    Parser(LinkedBlockingDeque<Token> tokenStream){
+    Parser(BlockingDeque<Token> tokenStream){
         this.tokenStream=tokenStream;
     }
 
     @Override
     public void run(){
        while(true) {
-           try {
+          try {
                Token token=tokenStream.take();
                if(token.getType()== TokenType.END){
                    break;
@@ -109,7 +109,7 @@ public class Parser implements Runnable {
         return new MinusNode(token,expression1,expression2);
     }
 
-    //helper method
+    //helper methods
     Token expect(TokenType type) throws InterruptedException{
         Token token= tokenStream.take();
         if(token.getType()!=type){

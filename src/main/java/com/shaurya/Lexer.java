@@ -4,15 +4,15 @@ import com.shaurya.enums.State;
 import com.shaurya.enums.TokenType;
 import lombok.Data;
 
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.BlockingDeque;
 
 @Data
 public class Lexer implements Runnable {
     private int position;
     private String input;
-    private LinkedBlockingDeque<Token> tokenStream;
+    private BlockingDeque<Token> tokenStream;
 
-    Lexer(int position,String input,LinkedBlockingDeque<Token> tokenStream){
+    Lexer(int position,String input,BlockingDeque<Token> tokenStream){
         this.position=position;
        this.input=input;
        this.tokenStream=tokenStream;
