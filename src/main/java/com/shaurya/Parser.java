@@ -2,11 +2,13 @@ package com.shaurya;
 
 import com.shaurya.enums.TokenType;
 import com.shaurya.nodes.*;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingDeque;
 
+@Data
 public class Parser implements Runnable {
     BlockingDeque<Token> tokenStream;
     List<Node> ast=new ArrayList<>();

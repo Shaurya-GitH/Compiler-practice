@@ -1,5 +1,7 @@
 package com.shaurya;
 
+import com.shaurya.visitors.PrintVisitor;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -27,5 +29,7 @@ public class Main {
         Thread parserThread=Thread.ofVirtual().start(parser);
         lexerThread.join();
         parserThread.join();
+        PrintVisitor printer=new PrintVisitor();
+        printer.print(parser);
     }
 }
