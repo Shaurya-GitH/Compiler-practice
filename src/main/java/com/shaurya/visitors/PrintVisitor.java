@@ -2,44 +2,45 @@ package com.shaurya.visitors;
 
 import com.shaurya.nodes.*;
 
-public class PrintVisitor implements Visitor{
-    @Override
-    public void visit(AssignNode n) {
+public class PrintVisitor implements Visitor<String>{
 
+    @Override
+    public String visit(AssignNode n) {
+        return "";
     }
 
     @Override
-    public void visit(DeclarationNode n) {
-
+    public String visit(DeclarationNode n) {
+        return "";
     }
 
     @Override
-    public void visit(ExpressionNode n) {
-
+    public String visit(ExpressionNode n) {
+        return "";
     }
 
     @Override
-    public void visit(MiddleNode n) {
-
+    public String visit(MiddleNode n) {
+        return "";
     }
 
     @Override
-    public void visit(MinusNode n) {
-
+    public String visit(MinusNode n) {
+        return "";
     }
 
     @Override
-    public void visit(MultiplicationNode n) {
-
+    public String visit(MultiplicationNode n) {
+        return "";
     }
 
     @Override
-    public void visit(PlusNode n) {
-
+    public String visit(PlusNode n) {
+        return "";
     }
 
     @Override
-    public void visit(PrintNode n) {
-
+    public String visit(PrintNode n) {
+        return "";
     }
 }

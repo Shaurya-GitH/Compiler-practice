@@ -5,5 +5,5 @@ import com.shaurya.visitors.Visitor;
 
 public interface Node {
     NodeType type();
-    void accept(Visitor v);
+    <T> T accept(Visitor<T> v);
 }
