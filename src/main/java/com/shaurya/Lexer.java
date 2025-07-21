@@ -79,7 +79,7 @@ public class Lexer implements Runnable {
                token.setType(TokenType.INT);
                break;
            }
-           case "print":{
+           case "run":{
                token.setType(TokenType.PRINT);
                break;
            }

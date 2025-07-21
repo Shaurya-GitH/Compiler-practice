@@ -30,6 +30,6 @@ public class Main {
         lexerThread.join();
         parserThread.join();
         PrintVisitor printer=new PrintVisitor();
-        printer.print(parser) ;
+        printer.run(parser) ;
     }
 }

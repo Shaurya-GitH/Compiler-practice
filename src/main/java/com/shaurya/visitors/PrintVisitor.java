@@ -7,7 +7,7 @@ import java.util.List;
 
 public class PrintVisitor implements Visitor<String>{
 
-    public void print(Parser parser){
+    public void run(Parser parser){
         StringBuilder builder=new StringBuilder();
         List<Node> ast= parser.getAst() ;
         for(Node n:ast){
@@ -42,6 +42,6 @@ public class PrintVisitor implements Visitor<String>{
 
     @Override
     public String visit(PrintNode n) {
-        return "( print "+ n.getId().getLexeme()+" )";
+        return "( run "+ n.getId().getLexeme()+" )";
     }
 }
