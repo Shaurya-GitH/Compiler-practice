@@ -1,3 +1,6 @@
 int a=3;
-c=a+b+2;
+int k=0;
+int c=5;
+k=5+a+c+2;
+a=1;
 print a;

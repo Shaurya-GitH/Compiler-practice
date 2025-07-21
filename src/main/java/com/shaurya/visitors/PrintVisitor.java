@@ -42,6 +42,6 @@ public class PrintVisitor implements Visitor<String>{
 
     @Override
     public String visit(PrintNode n) {
-        return "( run "+ n.getId().getLexeme()+" )";
+        return "( print "+ n.getId().getLexeme()+" )";
     }
 }

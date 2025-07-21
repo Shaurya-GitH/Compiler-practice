@@ -1,10 +1,12 @@
 package com.shaurya;
 
 import com.shaurya.visitors.PrintVisitor;
+import com.shaurya.visitors.SemanticVisitor;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.InvalidPropertiesFormatException;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -29,7 +31,11 @@ public class Main {
         Thread parserThread=Thread.ofVirtual().start(parser);
         lexerThread.join();
         parserThread.join();
-        PrintVisitor printer=new PrintVisitor();
-        printer.run(parser) ;
+        HashMap<String,SymbolData> symbolTable=new HashMap<String,SymbolData>();
+        SemanticVisitor semanticVisitor=new SemanticVisitor(symbolTable);
+        semanticVisitor.run(parser) ;
+        for(String key: symbolTable.keySet()){
+            System.out.println(key+ " : "+symbolTable.get(key));
+        }
     }
 }
