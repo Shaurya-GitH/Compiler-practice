@@ -11,7 +11,7 @@ import lombok.Data;
 public class AssignNode implements Node{
     Token id;
     Token equals;
-    ExpressionNode expression;
+    Node expression;
 
     @Override
     public NodeType type(){

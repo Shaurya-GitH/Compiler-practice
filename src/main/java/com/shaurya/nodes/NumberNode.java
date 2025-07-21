@@ -8,17 +8,17 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class MiddleNode implements Node{
+public class NumberNode implements Node{
+
     Token id;
-    MultiplicationNode expression;
 
     @Override
-    public NodeType type(){
-        return NodeType.MIDDLE;
+    public NodeType type() {
+        return NodeType.NUMBER;
     }
 
     @Override
     public <T> T accept(Visitor<T> v) {
-        return v.visit(this) ;
+        return v.visit(this);
     }
 }
