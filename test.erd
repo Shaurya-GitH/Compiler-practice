@@ -1,5 +1,1 @@
-int a=3;
-int b=4;
-int c=0;
-c=a+b*2;
-print c;
+c=a+b+2;

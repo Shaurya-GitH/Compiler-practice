@@ -8,18 +8,19 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class MinusNode implements Node{
-    Token minus;
-   MiddleNode expression1;
-   Node expression2;
+public class BinaryOpNode implements Node{
+
+    Node left;
+    Token operator;
+    Node right;
 
     @Override
-    public NodeType type(){
-        return NodeType.MINUS;
+    public NodeType type() {
+        return NodeType.BINARY;
     }
 
     @Override
-    public void accept(Visitor v) {
-        v.visit(this) ;
+    public <T> T accept(Visitor<T> v) {
+        return v.visit(this);
     }
 }

@@ -11,7 +11,7 @@ import lombok.Data;
 public class AssignNode implements Node{
     Token id;
     Token equals;
-    ExpressionNode expression;
+    Node expression;
 
     @Override
     public NodeType type(){
@@ -19,7 +19,7 @@ public class AssignNode implements Node{
     }
 
     @Override
-    public void accept(Visitor v) {
-       v.visit(this) ;
+    public <T> T accept(Visitor<T> v) {
+       return v.visit(this) ;
     }
 }

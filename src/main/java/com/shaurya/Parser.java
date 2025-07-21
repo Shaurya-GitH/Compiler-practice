@@ -2,11 +2,13 @@ package com.shaurya;
 
 import com.shaurya.enums.TokenType;
 import com.shaurya.nodes.*;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingDeque;
 
+@Data
 public class Parser implements Runnable {
     BlockingDeque<Token> tokenStream;
     List<Node> ast=new ArrayList<>();
@@ -39,15 +41,23 @@ public class Parser implements Runnable {
     DeclarationNode intParser(Token token) throws InterruptedException{
         Token id=expect(TokenType.IDENTIFIER);
         Token equals=expect(TokenType.EQUALS);
-        ExpressionNode expression= expressionParser();
+        Node expression= expressionParser();
         expect(TokenType.SEMICOLON);
         return new DeclarationNode(token,id,equals,expression);
     }
 
-    ExpressionNode expressionParser() throws InterruptedException{
-        MiddleNode expression1= middleNodeParser();
-        Node expression2= addSubParser();
-        return new ExpressionNode(expression1,expression2);
+    Node expressionParser() throws InterruptedException{
+        Node left= termParser();
+        while(true){
+            Token curr= tokenStream.peek();
+            if(curr.getType()==TokenType.PLUS || curr.getType()==TokenType.MINUS){
+                expect(TokenType.PLUS,TokenType.MINUS);
+                Node right= termParser();
+                left= new BinaryOpNode(left,curr,right) ;
+            }
+            else break;
+        }
+        return left;
     }
 
     PrintNode printParser(Token token) throws InterruptedException {
@@ -58,55 +68,24 @@ public class Parser implements Runnable {
 
     AssignNode idParser(Token token) throws InterruptedException {
         Token equals=expect(TokenType.EQUALS);
-        ExpressionNode expression=expressionParser();
+        Node expression=expressionParser();
         expect(TokenType.SEMICOLON);
         return new AssignNode(token,equals,expression);
     }
 
-    MiddleNode middleNodeParser() throws InterruptedException {
+    Node termParser() throws InterruptedException {
        Token id=expect(TokenType.IDENTIFIER,TokenType.NUMBER) ;
-       MultiplicationNode expression=multiplicationParser();
-       return new MiddleNode(id,expression);
-    }
-
-    MultiplicationNode multiplicationParser() throws InterruptedException {
-        Token curr=tokenStream.peek();
-        if(curr.getType()==TokenType.SEMICOLON || curr.getType()==TokenType.PLUS || curr.getType()==TokenType.MINUS){
-          return null;
-        }
-        else if(curr.getType()==TokenType.MULTIPLY){
-            expect(TokenType.MULTIPLY);
-            Token id=expect(TokenType.IDENTIFIER,TokenType.NUMBER);
-            MultiplicationNode expression=multiplicationParser();
-            return new MultiplicationNode(curr,id,expression);
-        }
-        else{
-            throw new RuntimeException("Invalid Syntax "+curr.getLexeme());
-        }
-    }
-
-    Node addSubParser() throws InterruptedException{
-        Token curr=tokenStream.peek();
-        return switch(curr.getType()){
-            case TokenType.PLUS -> plusParser(curr);
-            case TokenType.MINUS -> minusParser(curr);
-            case TokenType.SEMICOLON -> null;
-            default -> throw new RuntimeException("Invalid Syntax "+curr.getLexeme());
-        };
-    }
-
-    PlusNode plusParser(Token token) throws InterruptedException {
-        expect(TokenType.PLUS);
-        MiddleNode expression1=middleNodeParser();
-        Node expression2=addSubParser();
-        return new PlusNode(token,expression1,expression2);
-    }
-
-    MinusNode minusParser(Token token) throws InterruptedException {
-        expect(TokenType.MINUS);
-        MiddleNode expression1=middleNodeParser();
-        Node expression2=addSubParser();
-        return new MinusNode(token,expression1,expression2);
+       Node left=new NumberNode(id);
+       while(true){
+           Token curr= tokenStream.peek();
+           if(curr.getType()==TokenType.MULTIPLY){
+               expect(TokenType.MULTIPLY);
+               Node right=new NumberNode(expect(TokenType.IDENTIFIER,TokenType.NUMBER));
+               left=new BinaryOpNode(left,curr,right);
+           }
+           else break;
+       }
+       return left;
     }
 
     //helper methods
