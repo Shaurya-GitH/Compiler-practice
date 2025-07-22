@@ -4,3 +4,5 @@ int c=5;
 k=5+a+c+2;
 a=1;
 print a;
+print k;
+print c;

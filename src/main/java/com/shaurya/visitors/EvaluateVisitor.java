@@ -9,11 +9,11 @@ import com.shaurya.nodes.*;
 import java.util.List;
 import java.util.Map;
 
-public class SemanticVisitor implements Visitor<String>{
+public class EvaluateVisitor implements Visitor<String>{
 
     Map<String,SymbolData> symbolTable;
 
-    public SemanticVisitor(Map<String,SymbolData> symbolTable){
+    public EvaluateVisitor(Map<String,SymbolData> symbolTable){
         this.symbolTable=symbolTable;
     }
 
@@ -77,6 +77,7 @@ public class SemanticVisitor implements Visitor<String>{
     @Override
     public String visit(PrintNode n) {
         if(symbolTable.containsKey(n.getId().getLexeme())){
+            System.out.println(symbolTable.get(n.getId().getLexeme()).getData()) ;
             return null;
         }
         throw new RuntimeException("Variable not initialized");

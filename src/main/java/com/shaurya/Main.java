@@ -1,7 +1,6 @@
 package com.shaurya;
 
-import com.shaurya.visitors.PrintVisitor;
-import com.shaurya.visitors.SemanticVisitor;
+import com.shaurya.visitors.EvaluateVisitor;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -32,10 +31,7 @@ public class Main {
         lexerThread.join();
         parserThread.join();
         HashMap<String,SymbolData> symbolTable=new HashMap<String,SymbolData>();
-        SemanticVisitor semanticVisitor=new SemanticVisitor(symbolTable);
-        semanticVisitor.run(parser) ;
-        for(String key: symbolTable.keySet()){
-            System.out.println(key+ " : "+symbolTable.get(key));
-        }
+        EvaluateVisitor evaluateVisitor =new EvaluateVisitor(symbolTable);
+        evaluateVisitor.run(parser) ;
     }
 }
